@@ -112,4 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
     el.classList.add('animate-pending');
     observer.observe(el);
   });
+  // Safety fallback: ensure everything is visible even if IntersectionObserver
+  // misses an element (e.g. very fast scroll, automated testing/screenshot tools).
+  setTimeout(() => {
+    document.querySelectorAll('.animate-pending').forEach(el => el.classList.add('animate-in'));
+  }, 1500);
 });

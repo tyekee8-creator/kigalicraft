@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo"><span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link">Shop</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+      <a href="auth.html" class="btn-outline">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>About KigaliCraft</h1>
+    <p>Our story, our mission, our artisans</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="eyebrow">Our Story</span>
+        <h2>From Kigali to the World</h2>
+        <p>KigaliCraft was founded in 2020 with a simple but powerful mission: to connect Rwanda's extraordinary artisans with customers around the world who appreciate authentic, handcrafted products.</p>
+        <p>Rwanda has a rich tradition of craftsmanship passed down through generations. From the iconic <em>agaseke</em> peace baskets to the geometric <em>imigongo</em> paintings, every piece tells a story of culture, skill, and pride.</p>
+        <p>We work directly with over 120 artisans across 30 districts, ensuring fair prices and sustainable livelihoods for the talented creators behind each product.</p>
+      </div>
+      <div class="about-visual">
+        <div class="about-emoji-grid">
+          <div class="about-emoji-item">🧺<span>Baskets</span></div>
+          <div class="about-emoji-item">🏺<span>Pottery</span></div>
+          <div class="about-emoji-item">🪡<span>Textiles</span></div>
+          <div class="about-emoji-item">💍<span>Jewelry</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>Fair Trade</h3>
+        <p>We ensure every artisan receives fair compensation for their work, contributing to sustainable local economies.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌱</div>
+        <h3>Sustainable</h3>
+        <p>Our products are made from natural, locally-sourced materials using environmentally conscious methods.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🎨</div>
+        <h3>Authentic</h3>
+        <p>Every item is 100% handmade, preserving traditional techniques and cultural heritage for future generations.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌍</div>
+        <h3>Global Reach</h3>
+        <p>We ship to over 50 countries, bringing Rwandan artistry to customers across every continent.</p>
+      </div>
+    </div>
+
+    <div class="artisans-section">
+      <h2 class="section-title">Meet Our Artisans</h2>
+      <div class="artisans-grid">
+        <div class="artisan-card">
+          <div class="artisan-avatar">👩‍🎨</div>
+          <h3>Marie Uwimana</h3>
+          <p class="artisan-loc">📍 Musanze, Northern Province</p>
+          <p>Master basket weaver with 25 years of experience. Marie specializes in the traditional agaseke peace baskets.</p>
+        </div>
+        <div class="artisan-card">
+          <div class="artisan-avatar">👨‍🎨</div>
+          <h3>Emmanuel Habimana</h3>
+          <p class="artisan-loc">📍 Nyamata, Eastern Province</p>
+          <p>Renowned imigongo painter preserving this ancient geometric art form unique to the Rwandan cultural heritage.</p>
+        </div>
+        <div class="artisan-card">
+          <div class="artisan-avatar">👩‍🏭</div>
+          <h3>Claudine Mukamana</h3>
+          <p class="artisan-loc">📍 Rubavu, Western Province</p>
+          <p>Expert pottery artisan creating functional and decorative pieces using traditional clay techniques.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><p>© 2026 KigaliCraft. Made with ❤️ in Rwanda.</p></div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>updateCartBadge();</script>
+</body>
+</html>

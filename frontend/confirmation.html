@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="checkout-steps">
+  <div class="step done">1. Cart</div>
+  <div class="step-divider"></div>
+  <div class="step done">2. Checkout</div>
+  <div class="step-divider"></div>
+  <div class="step active">3. Confirmation</div>
+</div>
+
+<section class="section confirmation-section">
+  <div class="container">
+    <div class="confirmation-card">
+      <div class="success-animation">✅</div>
+      <h1>Order Confirmed!</h1>
+      <p class="confirm-subtitle">Thank you for supporting Rwandan artisans.</p>
+      <div id="orderDetails"></div>
+      <div class="confirm-actions">
+        <a href="index.html" class="btn-primary">Continue Shopping</a>
+        <button class="btn-outline" onclick="window.print()">🖨️ Print Receipt</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><p>© 2026 KigaliCraft. Made with ❤️ in Rwanda.</p></div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+    const order = JSON.parse(localStorage.getItem('kc_last_order') || 'null');
+    const el = document.getElementById('orderDetails');
+
+    if (!order) {
+      el.innerHTML = '<p>No order found. <a href="products.html">Go shopping</a></p>';
+      return;
+    }
+
+    const paymentLabels = { mtn: 'MTN Mobile Money', airtel: 'Airtel Money', card: 'Credit Card' };
+
+    el.innerHTML = `
+      <div class="order-id-box">Order ID: <strong>${order.id}</strong></div>
+      <div class="confirm-grid">
+        <div class="confirm-block">
+          <h3>Delivery To</h3>
+          <p>${order.customer.firstName} ${order.customer.lastName}</p>
+          <p>${order.customer.email}</p>
+          <p>${order.customer.phone}</p>
+          <p>${order.customer.address}, ${order.customer.city}</p>
+          <p>${order.customer.country}</p>
+        </div>
+        <div class="confirm-block">
+          <h3>Payment</h3>
+          <p>${paymentLabels[order.payment] || order.payment}</p>
+          <p>Status: <span class="badge-success">Pending Confirmation</span></p>
+          <p>Date: ${new Date(order.date).toLocaleDateString()}</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;">Items Ordered</h3>
+      <div class="confirm-items">
+        ${order.items.map(i => `
+          <div class="confirm-item">
+            <span>${i.emoji} ${i.name} ×${i.quantity}</span>
+            <span>$${(i.price*i.quantity).toFixed(2)}</span>
+          </div>`).join('')}
+      </div>
+
+      <div class="confirm-totals">
+        <div class="summary-row"><span>Subtotal</span><span>$${order.subtotal.toFixed(2)}</span></div>
+        <div class="summary-row"><span>Shipping</span><span>${order.shipping===0?'FREE':'$'+order.shipping.toFixed(2)}</span></div>
+        <div class="summary-row"><span>Tax</span><span>$${order.tax.toFixed(2)}</span></div>
+        <div class="summary-row total-row"><span><strong>Total</strong></span><span><strong>$${order.total.toFixed(2)}</strong></span></div>
+      </div>
+
+      <div class="delivery-note">
+        📦 Estimated delivery: <strong>5–10 business days</strong> within Rwanda · 10–21 days international
+      </div>`;
+  });
+</script>
+</body>
+</html>

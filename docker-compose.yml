@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  kigalicraft-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kigalicraft-app
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - JWT_SECRET=${JWT_SECRET:-kigalicraft_secret_2026_change_in_production}
+    volumes:
+      - kigalicraft-data:/app/backend/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  kigalicraft-data:
+    driver: local

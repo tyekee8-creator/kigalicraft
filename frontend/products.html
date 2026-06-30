@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link active">Shop</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search crafts..." />
+        <button class="search-btn" onclick="applyFilters()">🔍</button>
+      </div>
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+      <a href="auth.html" class="btn-outline" id="authBtn">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1>Shop All Products</h1>
+    <p>Handcrafted with pride by Rwandan artisans</p>
+  </div>
+</div>
+
+<!-- SHOP LAYOUT -->
+<section class="section shop-section">
+  <div class="container">
+    <div class="shop-layout">
+
+      <!-- SIDEBAR FILTERS -->
+      <aside class="sidebar">
+        <div class="filter-group">
+          <h3>Categories</h3>
+          <label class="filter-label"><input type="radio" name="category" value="" checked onchange="applyFilters()"> All Categories</label>
+          <label class="filter-label"><input type="radio" name="category" value="baskets" onchange="applyFilters()"> 🧺 Woven Baskets</label>
+          <label class="filter-label"><input type="radio" name="category" value="pottery" onchange="applyFilters()"> 🏺 Pottery</label>
+          <label class="filter-label"><input type="radio" name="category" value="textiles" onchange="applyFilters()"> 🪡 Textiles</label>
+          <label class="filter-label"><input type="radio" name="category" value="jewelry" onchange="applyFilters()"> 💍 Jewelry</label>
+          <label class="filter-label"><input type="radio" name="category" value="woodwork" onchange="applyFilters()"> 🪵 Woodwork</label>
+          <label class="filter-label"><input type="radio" name="category" value="paintings" onchange="applyFilters()"> 🎨 Paintings</label>
+        </div>
+
+        <div class="filter-group">
+          <h3>Price Range</h3>
+          <label class="filter-label"><input type="radio" name="price" value="" checked onchange="applyFilters()"> All Prices</label>
+          <label class="filter-label"><input type="radio" name="price" value="0-25" onchange="applyFilters()"> Under $25</label>
+          <label class="filter-label"><input type="radio" name="price" value="25-50" onchange="applyFilters()"> $25 – $50</label>
+          <label class="filter-label"><input type="radio" name="price" value="50-100" onchange="applyFilters()"> $50 – $100</label>
+          <label class="filter-label"><input type="radio" name="price" value="100-999" onchange="applyFilters()"> Over $100</label>
+        </div>
+
+        <div class="filter-group">
+          <h3>Sort By</h3>
+          <select id="sortSelect" onchange="applyFilters()" class="filter-select">
+            <option value="default">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A–Z</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+
+        <button class="btn-outline" onclick="resetFilters()" style="width:100%;margin-top:1rem;">Clear Filters</button>
+      </aside>
+
+      <!-- PRODUCTS AREA -->
+      <main class="products-main">
+        <div class="products-toolbar">
+          <span id="resultsCount">Loading...</span>
+          <div class="view-toggle">
+            <button onclick="setView('grid')" id="gridBtn" class="view-btn active">⊞ Grid</button>
+            <button onclick="setView('list')" id="listBtn" class="view-btn">☰ List</button>
+          </div>
+        </div>
+        <div class="products-grid" id="productsContainer"></div>
+        <div id="noResults" class="no-results" style="display:none;">
+          <p>😞 No products found. Try adjusting your filters.</p>
+          <button class="btn-primary" onclick="resetFilters()">Clear Filters</button>
+        </div>
+      </main>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 KigaliCraft. Made with ❤️ in Rwanda.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  let currentView = 'grid';
+
+  function setView(view) {
+    currentView = view;
+    document.getElementById('gridBtn').classList.toggle('active', view === 'grid');
+    document.getElementById('listBtn').classList.toggle('active', view === 'list');
+    const container = document.getElementById('productsContainer');
+    container.className = view === 'list' ? 'products-list' : 'products-grid';
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const catVal = document.querySelector('input[name="category"]:checked')?.value || '';
+    const priceVal = document.querySelector('input[name="price"]:checked')?.value || '';
+    const sortVal = document.getElementById('sortSelect').value;
+    const searchVal = document.getElementById('searchInput').value.toLowerCase();
+
+    let filtered = [...products];
+
+    if (catVal) filtered = filtered.filter(p => p.category === catVal);
+    if (searchVal) filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(searchVal) ||
+      p.description.toLowerCase().includes(searchVal)
+    );
+    if (priceVal) {
+      const [min, max] = priceVal.split('-').map(Number);
+      filtered = filtered.filter(p => p.price >= min && p.price <= max);
+    }
+    if (sortVal === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+    else if (sortVal === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+    else if (sortVal === 'name-asc') filtered.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sortVal === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+
+    const container = document.getElementById('productsContainer');
+    const noResults = document.getElementById('noResults');
+    const count = document.getElementById('resultsCount');
+
+    if (filtered.length === 0) {
+      container.innerHTML = '';
+      noResults.style.display = 'block';
+      count.textContent = '0 products found';
+    } else {
+      noResults.style.display = 'none';
+      count.textContent = `${filtered.length} product${filtered.length !== 1 ? 's' : ''} found`;
+      container.innerHTML = filtered.map(p =>
+        currentView === 'list' ? renderProductListItem(p) : renderProductCard(p)
+      ).join('');
+    }
+  }
+
+  function resetFilters() {
+    document.querySelector('input[name="category"][value=""]').checked = true;
+    document.querySelector('input[name="price"][value=""]').checked = true;
+    document.getElementById('sortSelect').value = 'default';
+    document.getElementById('searchInput').value = '';
+    applyFilters();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+    // Check URL params
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('category');
+    const search = params.get('search');
+    if (cat) {
+      const radio = document.querySelector(`input[name="category"][value="${cat}"]`);
+      if (radio) radio.checked = true;
+    }
+    if (search) {
+      document.getElementById('searchInput').value = search;
+    }
+    applyFilters();
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('searchInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') applyFilters();
+    });
+  });
+</script>
+</body>
+</html>

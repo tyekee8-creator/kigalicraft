@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Details – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link active">Shop</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+      <a href="auth.html" class="btn-outline">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <div class="container">
+    <a href="index.html">Home</a> › <a href="products.html">Shop</a> › <span id="breadcrumbName">Product</span>
+  </div>
+</div>
+
+<section class="section product-detail-section">
+  <div class="container">
+    <div class="product-detail-layout" id="productDetail">
+      <div class="detail-loader">Loading product...</div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <div class="related-section">
+      <h2 class="section-title">You May Also Like</h2>
+      <div class="products-grid" id="relatedProducts"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 KigaliCraft. Made with ❤️ in Rwanda.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    const product = products.find(p => p.id === id);
+
+    if (!product) {
+      document.getElementById('productDetail').innerHTML = '<p class="text-center">Product not found. <a href="products.html">Go back to shop</a></p>';
+      return;
+    }
+
+    document.title = `${product.name} – KigaliCraft`;
+    document.getElementById('breadcrumbName').textContent = product.name;
+
+    const stars = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
+
+    document.getElementById('productDetail').innerHTML = `
+      <div class="detail-images">
+        <div class="main-image">
+          <div class="product-emoji-large">${product.emoji}</div>
+        </div>
+        <div class="thumb-row">
+          <div class="thumb active">${product.emoji}</div>
+          <div class="thumb">${product.emoji}</div>
+          <div class="thumb">${product.emoji}</div>
+        </div>
+      </div>
+      <div class="detail-info">
+        <span class="detail-category">${product.category}</span>
+        <h1 class="detail-name">${product.name}</h1>
+        <div class="detail-rating">
+          <span class="stars-text">${stars}</span>
+          <span class="rating-num">${product.rating} (${product.reviews} reviews)</span>
+        </div>
+        <div class="detail-price">$${product.price.toFixed(2)}</div>
+        <p class="detail-description">${product.description}</p>
+        <div class="detail-meta">
+          <div class="meta-item"><strong>Artisan:</strong> ${product.artisan}</div>
+          <div class="meta-item"><strong>Origin:</strong> ${product.origin}, Rwanda</div>
+          <div class="meta-item"><strong>Material:</strong> ${product.material}</div>
+          <div class="meta-item"><strong>In Stock:</strong> <span class="in-stock">${product.stock} available</span></div>
+        </div>
+        <div class="detail-actions">
+          <div class="qty-control">
+            <button onclick="changeQty(-1)">−</button>
+            <span id="qtyVal">1</span>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+          <button class="btn-primary" onclick="addToCartFromDetail(${product.id})">Add to Cart 🛒</button>
+        </div>
+        <div class="detail-badges">
+          <span class="badge">✅ Fair Trade</span>
+          <span class="badge">🌍 Ships Worldwide</span>
+          <span class="badge">🔒 Secure Payment</span>
+        </div>
+      </div>
+    `;
+
+    // Related products
+    const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+    document.getElementById('relatedProducts').innerHTML = related.map(renderProductCard).join('');
+  });
+
+  let qty = 1;
+  function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    document.getElementById('qtyVal').textContent = qty;
+  }
+
+  function addToCartFromDetail(id) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    for (let i = 0; i < qty; i++) addToCart(product);
+    showToast(`${qty} × ${product.name} added to cart!`);
+  }
+</script>
+</body>
+</html>

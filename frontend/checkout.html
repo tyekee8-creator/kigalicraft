@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Checkout</h1>
+  </div>
+</div>
+
+<div class="checkout-steps">
+  <div class="step done">1. Cart</div>
+  <div class="step-divider"></div>
+  <div class="step active">2. Checkout</div>
+  <div class="step-divider"></div>
+  <div class="step">3. Confirmation</div>
+</div>
+
+<section class="section checkout-section">
+  <div class="container">
+    <div class="checkout-layout">
+
+      <!-- FORM -->
+      <div class="checkout-form-area">
+
+        <!-- Customer Info -->
+        <div class="form-section">
+          <h2>Customer Information</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" id="firstName" placeholder="Jean" />
+              <span class="field-error" id="firstNameErr"></span>
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" id="lastName" placeholder="Mutoni" />
+              <span class="field-error" id="lastNameErr"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="email" placeholder="jean@example.com" />
+            <span class="field-error" id="emailErr"></span>
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="phone" placeholder="+250 780 000 000" />
+            <span class="field-error" id="phoneErr"></span>
+          </div>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="form-section">
+          <h2>Shipping Address</h2>
+          <div class="form-group">
+            <label>Street Address *</label>
+            <input type="text" id="address" placeholder="KG 12 Ave, Kacyiru" />
+            <span class="field-error" id="addressErr"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City *</label>
+              <input type="text" id="city" placeholder="Kigali" />
+              <span class="field-error" id="cityErr"></span>
+            </div>
+            <div class="form-group">
+              <label>Country *</label>
+              <select id="country">
+                <option value="">Select country</option>
+                <option value="RW" selected>Rwanda</option>
+                <option value="KE">Kenya</option>
+                <option value="UG">Uganda</option>
+                <option value="TZ">Tanzania</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="BE">Belgium</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="field-error" id="countryErr"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Postal Code</label>
+            <input type="text" id="postal" placeholder="00000" />
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="form-section">
+          <h2>Payment Method</h2>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="payment" value="mtn" checked />
+              <div class="payment-label">
+                <span class="payment-icon">📱</span>
+                <span>MTN Mobile Money</span>
+              </div>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment" value="airtel" />
+              <div class="payment-label">
+                <span class="payment-icon">📲</span>
+                <span>Airtel Money</span>
+              </div>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment" value="card" />
+              <div class="payment-label">
+                <span class="payment-icon">💳</span>
+                <span>Credit / Debit Card</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Card Fields (shown when card selected) -->
+          <div id="cardFields" style="display:none;">
+            <div class="form-group">
+              <label>Card Number *</label>
+              <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+              <span class="field-error" id="cardNumberErr"></span>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expiry Date *</label>
+                <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" />
+                <span class="field-error" id="expiryErr"></span>
+              </div>
+              <div class="form-group">
+                <label>CVV *</label>
+                <input type="text" id="cvv" placeholder="123" maxlength="3" />
+                <span class="field-error" id="cvvErr"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MTN Fields -->
+          <div id="mtnFields">
+            <div class="form-group">
+              <label>MTN MoMo Number *</label>
+              <input type="tel" id="momoNumber" placeholder="+250 78X XXX XXX" />
+              <span class="field-error" id="momoNumberErr"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="agreeTerms" />
+            I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+          </label>
+          <span class="field-error" id="agreeErr"></span>
+        </div>
+
+        <button class="btn-primary place-order-btn" onclick="placeOrder()">
+          🔒 Place Order Securely
+        </button>
+      </div>
+
+      <!-- ORDER SUMMARY SIDEBAR -->
+      <div class="checkout-summary">
+        <h3>Order Summary</h3>
+        <div id="summaryItems"></div>
+        <div class="summary-divider"></div>
+        <div id="summaryTotals"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><p>© 2026 KigaliCraft. 🔒 Secured & Encrypted Checkout</p></div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+    renderSummary();
+
+    // Payment method toggle
+    document.querySelectorAll('input[name="payment"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const cardFields = document.getElementById('cardFields');
+        const mtnFields = document.getElementById('mtnFields');
+        if (r.value === 'card') { cardFields.style.display='block'; mtnFields.style.display='none'; }
+        else if (r.value === 'mtn') { cardFields.style.display='none'; mtnFields.style.display='block'; }
+        else { cardFields.style.display='none'; mtnFields.style.display='none'; }
+      });
+    });
+
+    // Card number formatting
+    document.getElementById('cardNumber')?.addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim();
+    });
+    document.getElementById('expiry')?.addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'$1/$2');
+    });
+  });
+
+  function renderSummary() {
+    const cart = getCart();
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+    const shipping = subtotal > 100 ? 0 : 15;
+    const tax = subtotal * 0.08;
+    const total = subtotal + shipping + tax;
+
+    document.getElementById('summaryItems').innerHTML = cart.map(item => `
+      <div class="summary-item">
+        <span class="summary-emoji">${item.emoji}</span>
+        <span class="summary-item-name">${item.name} ×${item.quantity}</span>
+        <span>$${(item.price*item.quantity).toFixed(2)}</span>
+      </div>`).join('') || '<p>No items in cart. <a href="products.html">Shop now</a></p>';
+
+    document.getElementById('summaryTotals').innerHTML = `
+      <div class="summary-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+      <div class="summary-row"><span>Shipping</span><span>${shipping===0?'FREE':'$'+shipping.toFixed(2)}</span></div>
+      <div class="summary-row"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>
+      <div class="summary-row total-row"><span><strong>Total</strong></span><span><strong>$${total.toFixed(2)}</strong></span></div>`;
+  }
+
+  function validateField(id, errId, condition, message) {
+    const el = document.getElementById(id);
+    const err = document.getElementById(errId);
+    if (!condition(el?.value)) {
+      err.textContent = message;
+      el?.classList.add('input-error');
+      return false;
+    }
+    err.textContent = '';
+    el?.classList.remove('input-error');
+    return true;
+  }
+
+  function placeOrder() {
+    const payment = document.querySelector('input[name="payment"]:checked').value;
+    let valid = true;
+
+    valid &= validateField('firstName','firstNameErr', v=>v.trim().length>=2, 'First name is required');
+    valid &= validateField('lastName','lastNameErr', v=>v.trim().length>=2, 'Last name is required');
+    valid &= validateField('email','emailErr', v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Valid email required');
+    valid &= validateField('phone','phoneErr', v=>v.trim().length>=8, 'Valid phone number required');
+    valid &= validateField('address','addressErr', v=>v.trim().length>=5, 'Street address is required');
+    valid &= validateField('city','cityErr', v=>v.trim().length>=2, 'City is required');
+    valid &= validateField('country','countryErr', v=>v!=='', 'Please select a country');
+
+    if (payment === 'card') {
+      valid &= validateField('cardNumber','cardNumberErr', v=>v.replace(/\s/g,'').length===16, 'Valid 16-digit card number required');
+      valid &= validateField('expiry','expiryErr', v=>/^\d{2}\/\d{2}$/.test(v), 'Valid expiry (MM/YY) required');
+      valid &= validateField('cvv','cvvErr', v=>/^\d{3}$/.test(v), '3-digit CVV required');
+    }
+    if (payment === 'mtn' || payment === 'airtel') {
+      valid &= validateField('momoNumber','momoNumberErr', v=>v.trim().length>=8, 'Valid mobile money number required');
+    }
+
+    const agree = document.getElementById('agreeTerms');
+    if (!agree.checked) {
+      document.getElementById('agreeErr').textContent = 'You must agree to the terms';
+      valid = false;
+    } else {
+      document.getElementById('agreeErr').textContent = '';
+    }
+
+    if (!valid) {
+      showToast('Please fix the errors above', 'error');
+      return;
+    }
+
+    // Build order object
+    const cart = getCart();
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+    const shipping = subtotal > 100 ? 0 : 15;
+    const tax = subtotal * 0.08;
+    const total = subtotal + shipping + tax;
+
+    const order = {
+      id: 'KC' + Date.now(),
+      date: new Date().toISOString(),
+      customer: {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        city: document.getElementById('city').value,
+        country: document.getElementById('country').value
+      },
+      items: cart,
+      payment: payment,
+      subtotal, shipping, tax, total
+    };
+
+    // Save order to localStorage
+    const orders = JSON.parse(localStorage.getItem('kc_orders') || '[]');
+    orders.push(order);
+    localStorage.setItem('kc_orders', JSON.stringify(orders));
+    localStorage.setItem('kc_last_order', JSON.stringify(order));
+
+    clearCart();
+    window.location.href = 'confirmation.html';
+  }
+</script>
+</body>
+</html>

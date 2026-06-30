@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="auth-section">
+  <div class="auth-container">
+    <div class="auth-brand">
+      <div class="auth-logo">🧺</div>
+      <h2>KigaliCraft</h2>
+      <p>Authentic Rwandan Handcrafts</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="loginTab" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" id="registerTab" onclick="switchTab('register')">Create Account</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" class="auth-form">
+      <h3>Welcome Back!</h3>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" />
+        <span class="field-error" id="loginEmailErr"></span>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="loginPassword" placeholder="Your password" />
+          <button type="button" class="toggle-pw" onclick="togglePw('loginPassword')">👁</button>
+        </div>
+        <span class="field-error" id="loginPasswordErr"></span>
+      </div>
+      <div class="form-row-inline">
+        <label class="checkbox-label"><input type="checkbox" /> Remember me</label>
+        <a href="#" class="link-small">Forgot password?</a>
+      </div>
+      <button class="btn-primary auth-submit" onclick="handleLogin()">Sign In</button>
+      <div class="auth-divider"><span>or</span></div>
+      <p class="auth-switch">Don't have an account? <a onclick="switchTab('register')">Create one →</a></p>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" class="auth-form" style="display:none;">
+      <h3>Create Your Account</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="regFirstName" placeholder="Jean" />
+          <span class="field-error" id="regFirstNameErr"></span>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="regLastName" placeholder="Mutoni" />
+          <span class="field-error" id="regLastNameErr"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="regEmail" placeholder="your@email.com" />
+        <span class="field-error" id="regEmailErr"></span>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="+250 780 000 000" />
+        <span class="field-error" id="regPhoneErr"></span>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="regPassword" placeholder="Min. 8 characters" />
+          <button type="button" class="toggle-pw" onclick="togglePw('regPassword')">👁</button>
+        </div>
+        <span class="field-error" id="regPasswordErr"></span>
+        <div class="password-strength" id="strengthBar"></div>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="regConfirm" placeholder="Re-enter password" />
+          <button type="button" class="toggle-pw" onclick="togglePw('regConfirm')">👁</button>
+        </div>
+        <span class="field-error" id="regConfirmErr"></span>
+      </div>
+      <label class="checkbox-label">
+        <input type="checkbox" id="regTerms" />
+        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+      </label>
+      <span class="field-error" id="regTermsErr"></span>
+      <button class="btn-primary auth-submit" onclick="handleRegister()">Create Account</button>
+      <p class="auth-switch">Already have an account? <a onclick="switchTab('login')">Sign in →</a></p>
+    </div>
+  </div>
+</section>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  updateCartBadge();
+
+  function switchTab(tab) {
+    document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+    document.getElementById('registerTab').classList.toggle('active', tab === 'register');
+    document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+  }
+
+  function togglePw(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    let valid = true;
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('loginEmailErr').textContent = 'Valid email required';
+      valid = false;
+    } else document.getElementById('loginEmailErr').textContent = '';
+
+    if (!password || password.length < 6) {
+      document.getElementById('loginPasswordErr').textContent = 'Password required';
+      valid = false;
+    } else document.getElementById('loginPasswordErr').textContent = '';
+
+    if (!valid) return;
+
+    // Check against stored users
+    const users = JSON.parse(localStorage.getItem('kc_users') || '[]');
+    const user = users.find(u => u.email === email && u.password === btoa(password));
+
+    if (user) {
+      localStorage.setItem('kc_user', JSON.stringify({ name: user.firstName + ' ' + user.lastName, email: user.email }));
+      showToast(`Welcome back, ${user.firstName}!`);
+      setTimeout(() => window.location.href = 'index.html', 1200);
+    } else {
+      // Demo login
+      if (email === 'demo@kigalicraft.rw' && password === 'demo1234') {
+        localStorage.setItem('kc_user', JSON.stringify({ name: 'Demo User', email }));
+        showToast('Signed in as Demo User!');
+        setTimeout(() => window.location.href = 'index.html', 1200);
+      } else {
+        document.getElementById('loginPasswordErr').textContent = 'Invalid email or password. Try demo@kigalicraft.rw / demo1234';
+      }
+    }
+  }
+
+  function handleRegister() {
+    let valid = true;
+    const fn = document.getElementById('regFirstName').value;
+    const ln = document.getElementById('regLastName').value;
+    const email = document.getElementById('regEmail').value;
+    const phone = document.getElementById('regPhone').value;
+    const pw = document.getElementById('regPassword').value;
+    const pw2 = document.getElementById('regConfirm').value;
+    const terms = document.getElementById('regTerms').checked;
+
+    const ve = (id,err,cond,msg) => { document.getElementById(err).textContent = cond ? '' : msg; if(!cond) valid=false; };
+    ve('regFirstName','regFirstNameErr',fn.trim().length>=2,'First name required');
+    ve('regLastName','regLastNameErr',ln.trim().length>=2,'Last name required');
+    ve('regEmail','regEmailErr',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),'Valid email required');
+    ve('regPhone','regPhoneErr',phone.trim().length>=8,'Valid phone required');
+    ve('regPassword','regPasswordErr',pw.length>=8,'Password must be at least 8 characters');
+    ve('regConfirm','regConfirmErr',pw===pw2,'Passwords do not match');
+    if (!terms) { document.getElementById('regTermsErr').textContent='You must agree to the terms'; valid=false; }
+    else document.getElementById('regTermsErr').textContent='';
+
+    if (!valid) return;
+
+    const users = JSON.parse(localStorage.getItem('kc_users') || '[]');
+    if (users.find(u => u.email === email)) {
+      document.getElementById('regEmailErr').textContent = 'Email already registered';
+      return;
+    }
+
+    users.push({ firstName: fn, lastName: ln, email, phone, password: btoa(pw) });
+    localStorage.setItem('kc_users', JSON.stringify(users));
+    localStorage.setItem('kc_user', JSON.stringify({ name: fn + ' ' + ln, email }));
+    showToast('Account created! Welcome to KigaliCraft!');
+    setTimeout(() => window.location.href = 'index.html', 1200);
+  }
+
+  // Password strength indicator
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('regPassword')?.addEventListener('input', function() {
+      const pw = this.value;
+      const bar = document.getElementById('strengthBar');
+      let strength = 0;
+      if (pw.length >= 8) strength++;
+      if (/[A-Z]/.test(pw)) strength++;
+      if (/[0-9]/.test(pw)) strength++;
+      if (/[^A-Za-z0-9]/.test(pw)) strength++;
+      const labels = ['','Weak','Fair','Good','Strong'];
+      const colors = ['','#e53e3e','#dd6b20','#d69e2e','#38a169'];
+      bar.innerHTML = pw ? `<div class="strength-fill" style="width:${strength*25}%;background:${colors[strength]}"></div><span>${labels[strength]}</span>` : '';
+    });
+  });
+</script>
+</body>
+</html>

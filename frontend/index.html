@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KigaliCraft – Authentic Rwandan Handcrafts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span>
+      <span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="products.html" class="nav-link">Shop</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search crafts..." />
+        <button class="search-btn" onclick="doSearch()">🔍</button>
+      </div>
+      <a href="cart.html" class="cart-btn">
+        🛒 <span class="cart-badge" id="cartCount">0</span>
+      </a>
+      <a href="auth.html" class="btn-outline" id="authBtn">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-eyebrow">Handmade in Rwanda 🇷🇼</span>
+    <h1 class="hero-title">Crafts That Tell<br><em>Rwanda's Story</em></h1>
+    <p class="hero-subtitle">Discover authentic handwoven baskets, pottery, textiles, and jewelry crafted by skilled Rwandan artisans.</p>
+    <div class="hero-cta">
+      <a href="products.html" class="btn-primary">Shop Now</a>
+      <a href="about.html" class="btn-ghost">Our Artisans</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>500+</strong><span>Products</span></div>
+      <div class="stat"><strong>120+</strong><span>Artisans</span></div>
+      <div class="stat"><strong>30+</strong><span>Districts</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-grid">
+      <div class="hero-img hi1">🧺</div>
+      <div class="hero-img hi2">🏺</div>
+      <div class="hero-img hi3">🪡</div>
+      <div class="hero-img hi4">💍</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section categories-section">
+  <div class="container">
+    <h2 class="section-title">Browse by Category</h2>
+    <div class="categories-grid">
+      <a href="products.html?category=baskets" class="category-card">
+        <div class="cat-icon">🧺</div>
+        <h3>Woven Baskets</h3>
+        <p>Traditional agaseke & ibyansi</p>
+        <span class="cat-count">87 items</span>
+      </a>
+      <a href="products.html?category=pottery" class="category-card">
+        <div class="cat-icon">🏺</div>
+        <h3>Pottery</h3>
+        <p>Clay & terracotta art pieces</p>
+        <span class="cat-count">54 items</span>
+      </a>
+      <a href="products.html?category=textiles" class="category-card">
+        <div class="cat-icon">🪡</div>
+        <h3>Textiles</h3>
+        <p>Imigongo & wax print fabric</p>
+        <span class="cat-count">102 items</span>
+      </a>
+      <a href="products.html?category=jewelry" class="category-card">
+        <div class="cat-icon">💍</div>
+        <h3>Jewelry</h3>
+        <p>Beaded & natural material pieces</p>
+        <span class="cat-count">63 items</span>
+      </a>
+      <a href="products.html?category=woodwork" class="category-card">
+        <div class="cat-icon">🪵</div>
+        <h3>Woodwork</h3>
+        <p>Carved sculptures & furniture</p>
+        <span class="cat-count">41 items</span>
+      </a>
+      <a href="products.html?category=paintings" class="category-card">
+        <div class="cat-icon">🎨</div>
+        <h3>Paintings</h3>
+        <p>Imigongo & modern art</p>
+        <span class="cat-count">78 items</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section featured-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Featured Products</h2>
+      <a href="products.html" class="view-all">View All →</a>
+    </div>
+    <div class="products-grid" id="featuredProducts">
+      <!-- Loaded dynamically -->
+    </div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="banner-section">
+  <div class="container">
+    <div class="banner-content">
+      <h2>Every purchase supports a Rwandan artisan family</h2>
+      <p>Fair trade certified · Handmade with pride · Ships worldwide</p>
+      <a href="products.html" class="btn-primary">Start Shopping</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+  <div class="container">
+    <h2 class="section-title">What Customers Say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"Absolutely beautiful basket. The quality exceeded my expectations and it arrived perfectly packaged!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div><strong>Amina K.</strong><span>Nairobi, Kenya</span></div>
+        </div>
+        <div class="stars">★★★★★</div>
+      </div>
+      <div class="testimonial-card">
+        <p>"I love the Imigongo painting I ordered. It's now the centerpiece of my living room. Truly unique."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">J</div>
+          <div><strong>Jean-Paul M.</strong><span>Brussels, Belgium</span></div>
+        </div>
+        <div class="stars">★★★★★</div>
+      </div>
+      <div class="testimonial-card">
+        <p>"Fast delivery and excellent customer service. Will definitely order again from KigaliCraft!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div><strong>Sarah O.</strong><span>London, UK</span></div>
+        </div>
+        <div class="stars">★★★★★</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span></div>
+        <p>Connecting Rwanda's finest artisans with the world.</p>
+        <div class="social-links">
+          <a href="#" class="social-link">📘</a>
+          <a href="#" class="social-link">📸</a>
+          <a href="#" class="social-link">🐦</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <a href="products.html">All Products</a>
+        <a href="products.html?category=baskets">Baskets</a>
+        <a href="products.html?category=jewelry">Jewelry</a>
+        <a href="products.html?category=textiles">Textiles</a>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="#">Our Artisans</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-links">
+        <h4>Support</h4>
+        <a href="#">Shipping Info</a>
+        <a href="#">Returns</a>
+        <a href="#">FAQ</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KigaliCraft. Made with ❤️ in Rwanda. All rights reserved.</p>
+      <p>Accepting: 💳 Visa · MasterCard · MTN Mobile Money · Airtel Money</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // Load featured products on homepage
+  window.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+    const container = document.getElementById('featuredProducts');
+    const featured = products.slice(0, 8);
+    container.innerHTML = featured.map(renderProductCard).join('');
+  });
+  function doSearch() {
+    const q = document.getElementById('searchInput').value;
+    if (q.trim()) window.location.href = `products.html?search=${encodeURIComponent(q)}`;
+  }
+  document.getElementById('searchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') doSearch();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart – KigaliCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🧺</span><span class="logo-text">KigaliCraft</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link">Shop</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+      <a href="auth.html" class="btn-outline">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Your Shopping Cart</h1>
+    <p>Review your items before checkout</p>
+  </div>
+</div>
+
+<!-- CHECKOUT STEPS -->
+<div class="checkout-steps">
+  <div class="step active">1. Cart</div>
+  <div class="step-divider"></div>
+  <div class="step">2. Checkout</div>
+  <div class="step-divider"></div>
+  <div class="step">3. Confirmation</div>
+</div>
+
+<section class="section cart-section">
+  <div class="container">
+    <div id="cartContent"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 KigaliCraft. Made with ❤️ in Rwanda.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  function renderCart() {
+    const cart = getCart();
+    const container = document.getElementById('cartContent');
+    updateCartBadge();
+
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="empty-cart">
+          <div class="empty-icon">🛒</div>
+          <h2>Your cart is empty</h2>
+          <p>Discover beautiful handcrafted items from Rwanda's finest artisans.</p>
+          <a href="products.html" class="btn-primary">Start Shopping</a>
+        </div>`;
+      return;
+    }
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    const shipping = subtotal > 100 ? 0 : 15;
+    const tax = subtotal * 0.08;
+    const total = subtotal + shipping + tax;
+
+    container.innerHTML = `
+      <div class="cart-layout">
+        <div class="cart-items">
+          <div class="cart-header-row">
+            <span>Product</span><span>Price</span><span>Qty</span><span>Total</span><span></span>
+          </div>
+          ${cart.map(item => `
+            <div class="cart-item" id="item-${item.id}">
+              <div class="cart-item-info">
+                <div class="cart-item-emoji">${item.emoji}</div>
+                <div>
+                  <h4><a href="product-detail.html?id=${item.id}">${item.name}</a></h4>
+                  <span class="cart-item-cat">${item.category}</span>
+                </div>
+              </div>
+              <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+              <div class="cart-qty-ctrl">
+                <button onclick="updateQty(${item.id}, ${item.quantity - 1})">−</button>
+                <span>${item.quantity}</span>
+                <button onclick="updateQty(${item.id}, ${item.quantity + 1})">+</button>
+              </div>
+              <div class="cart-item-total">$${(item.price * item.quantity).toFixed(2)}</div>
+              <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
+            </div>
+          `).join('')}
+          <div class="cart-actions">
+            <a href="products.html" class="btn-outline">← Continue Shopping</a>
+            <button class="btn-outline" onclick="clearCartConfirm()">Clear Cart</button>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><span>Subtotal (${cart.reduce((s,i)=>s+i.quantity,0)} items)</span><span>$${subtotal.toFixed(2)}</span></div>
+          <div class="summary-row"><span>Shipping</span><span>${shipping === 0 ? '<span class="free-tag">FREE</span>' : '$' + shipping.toFixed(2)}</span></div>
+          <div class="summary-row"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>
+          ${shipping > 0 ? `<div class="free-ship-note">Add $${(100 - subtotal).toFixed(2)} more for free shipping!</div>` : ''}
+          <div class="summary-row total-row"><span>Total</span><span>$${total.toFixed(2)}</span></div>
+          <div class="coupon-row">
+            <input type="text" id="couponCode" placeholder="Coupon code" class="coupon-input" />
+            <button class="btn-outline" onclick="applyCoupon()">Apply</button>
+          </div>
+          <a href="checkout.html" class="btn-primary checkout-cta">Proceed to Checkout →</a>
+          <div class="secure-badges">
+            <span>🔒 Secure Checkout</span>
+            <span>💳 Multiple Payment Options</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function updateQty(id, qty) {
+    if (qty < 1) { removeItem(id); return; }
+    updateCartQuantity(id, qty);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    removeFromCart(id);
+    renderCart();
+    showToast('Item removed from cart');
+  }
+
+  function clearCartConfirm() {
+    if (confirm('Remove all items from cart?')) {
+      clearCart();
+      renderCart();
+    }
+  }
+
+  function applyCoupon() {
+    const code = document.getElementById('couponCode').value.toUpperCase();
+    if (code === 'RWANDA10') showToast('10% discount applied! (Demo)');
+    else showToast('Invalid coupon code', 'error');
+  }
+
+  window.addEventListener('DOMContentLoaded', renderCart);
+</script>
+</body>
+</html>

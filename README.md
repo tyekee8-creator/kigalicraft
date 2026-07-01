@@ -102,9 +102,7 @@ kigali-market/
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/kigalicraft.git
-cd kigalicraft/backend
-
+git clone https://github.com/tyekee8-creator/kigalicraft.git
 # Install dependencies
 npm install
 

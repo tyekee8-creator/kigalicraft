@@ -10,45 +10,33 @@
 
 KigaliCraft is a full-stack e-commerce platform built for a fictional local Rwandan business specializing in handmade crafts — woven baskets, pottery, textiles, jewelry, woodwork, and Imigongo paintings. The platform allows customers to browse products, manage a shopping cart, complete a multi-step checkout, and track their order, while artisans' stories and Rwandan culture are showcased throughout.
 
-🏗️ System Architecture
-The KigaliCraft platform follows a three-layer architecture:
+## 🏗️ System Architecture
 
-Frontend (Client Layer)
+The KigaliCraft platform follows a **three-layer architecture**:
 
-Built with HTML, CSS, and vanilla JavaScript.
+- **Frontend (Client Layer)**  
+  - Built with HTML, CSS, and vanilla JavaScript.  
+  - Provides responsive UI, shopping cart (localStorage), and form validation.  
+  - Communicates with backend via RESTful API calls.  
 
-Provides responsive UI, shopping cart (localStorage), and form validation.
+- **Backend (Application Layer)**  
+  - Node.js + Express server (`backend/server.js`).  
+  - RESTful endpoints for products, users, orders, and health checks.  
+  - Authentication with bcrypt password hashing and JWT tokens.  
+  - Serves both API and static frontend files.  
 
-Communicates with backend via RESTful API calls.
+- **Database (Data Layer)**  
+  - Lightweight JSON-file database (`backend/db.js`) simulating relational tables.  
+  - Entities: users, products, orders, order_items.  
+  - Relationships: orders ↔ order_items ↔ products, users ↔ orders.  
 
-Backend (Application Layer)
+- **Infrastructure / DevOps**  
+  - Dockerized for containerized deployment.  
+  - GitHub Actions CI/CD pipeline for automated testing, build, and deployment.  
+  - Local development runs on Node.js, production-ready via Docker.  
 
-Node.js + Express server (backend/server.js).
-
-RESTful endpoints for products, users, orders, and health checks.
-
-Authentication with bcrypt password hashing and JWT tokens.
-
-Serves both API and static frontend files.
-
-Database (Data Layer)
-
-Lightweight JSON-file database (backend/db.js) simulating relational tables.
-
-Entities: users, products, orders, order_items.
-
-Relationships: orders ↔ order_items ↔ products, users ↔ orders.
-
-Infrastructure / DevOps
-
-Dockerized for containerized deployment.
-
-GitHub Actions CI/CD pipeline for automated testing, build, and deployment.
-
-Local development runs on Node.js, production-ready via Docker.
-
-Flow:  
-Browser (Frontend) → Express API (Backend) → JSON Database (Data Layer)
+**Flow:**  
+Browser (Frontend) → Express API (Backend) → JSON Database (Data Layer)  
 with Docker + CI/CD wrapping around for deployment and reliability.
 
 ## ✨ Features
